@@ -452,25 +452,6 @@ https://github.com/user-attachments/assets/8f1063c5-5501-4a82-b22c-aca2886b4cf1
 
 
 
-## Mémorisation
-
-Pour garder le dessin à l'écran, comme sur un vrai écran magique, il faut mémoriser tous les pixels déjà parcourus. Pour cela, on utilise un framebuffer : une mémoire qui contient une case par pixel de l'écran, réalisée avec la RAM dual-port fournie (dpram.vhd).
-
-### 1. Qu'est-ce qu'une mémoire dual-port ?
-
-Une mémoire RAM dual-port est *une seule mémoire* qui possède *deux ports d'accès indépendants*, A et B. Chaque port a sa propre horloge, sa propre adresse, ses propres données et son propre signal d'écriture. On peut donc, *au même moment*, écrire une case par un port et lire une autre case par l'autre port.
-
-Ports de dpram.vhd (identiques pour A et B) :
-
-| Signal | Rôle |
-|---|---|
-| i_clk_a / i_clk_b | Horloge du port |
-| i_addr_a / i_addr_b | Adresse de la case (0 à mem_size − 1) |
-| i_data_a / i_data_b | Donnée à écrire |
-| i_we_a / i_we_b | Autorisation d'écriture (1 = écriture) |
-| o_q_a / o_q_b | Donnée lue, disponible au coup d'horloge suivant |
-
-La mémoire est *synchrone* : tout se passe sur le front montant de l'horloge. Les deux ports accèdent à la même variable ram, donc une donnée écrite par le port A peut être lue par le port B. Seul cas à éviter : les deux ports qui écrivent en même temps à la même adresse.
 
 
 
